@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>TSK China Watch — cumulative archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:        #F0F2EA;
+    --paper-raised: #FAFAF4;
+    --ink:          #171F1A;
+    --ink-soft:     #4B564E;
+    --rule:         #CBD1C2;
+    --signal:       #C4881F;
+    --signal-soft:  #F1DDAE;
+    --link:         #2E5E63;
+    --link-visited: #6B5A3A;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ background:var(--paper); }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--link); }
+  a:visited{ color:var(--link-visited); }
+
+  ::selection{ background:var(--signal-soft); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .hit-card{ transition:transform 120ms ease, box-shadow 120ms ease; }
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead{
+    position:sticky;
+    top:0;
+    z-index:5;
+    background:var(--paper);
+    border-bottom:1px solid var(--rule);
+    padding:20px clamp(16px,4vw,48px) 16px;
+  }
+
+  .masthead-row{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px 24px;
+    max-width:920px;
+    margin:0 auto;
+  }
+
+  .wordmark{
+    font-family:'Source Serif 4', Georgia, serif;
+    font-weight:700;
+    font-size:1.5rem;
+    letter-spacing:0.01em;
+  }
+
+  .wordmark .unit{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:500;
+    font-size:0.72em;
+    color:var(--ink-soft);
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    margin-left:10px;
+    vertical-align:middle;
+  }
+
+  .status-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+
+  .status-line .n{ color:var(--ink); font-weight:500; }
+  .status-line .new{ color:var(--signal); font-weight:600; }
+
+  .masthead-sub{
+    max-width:920px;
+    margin:10px auto 0;
+    font-size:0.86rem;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- layout ---------- */
+
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:8px clamp(16px,4vw,48px) 64px;
+  }
+
+  .day-group{
+    margin-top:40px;
+  }
+
+  .day-header{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin:0 0 16px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--rule);
+  }
+
+  .day-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+  }
+
+  .day-count{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+  }
+
+  .day-group.is-latest .day-date::before{
+    content:"● ";
+    color:var(--signal);
+  }
+
+  .hit-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .hit-card{
+    background:var(--paper-raised);
+    border:1px solid var(--rule);
+    border-left:3px solid var(--rule);
+    border-radius:3px;
+    padding:16px 20px;
+  }
+
+  .day-group.is-latest .hit-card{
+    border-left-color:var(--signal);
+  }
+
+  .hit-meta{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:6px 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem;
+    color:var(--ink-soft);
+    margin-bottom:8px;
+  }
+
+  .hit-id{
+    color:var(--ink-soft);
+    opacity:0.7;
+  }
+
+  .hit-term mark{
+    background:var(--signal-soft);
+    color:var(--ink);
+    padding:0 4px;
+    border-radius:2px;
+    font-weight:600;
+  }
+
+  .hit-title{
+    margin:0 0 8px;
+    font-family:'Source Serif 4', Georgia, serif;
+    font-weight:600;
+    font-size:1.18rem;
+    line-height:1.35;
+  }
+
+  .hit-title a{
+    color:var(--ink);
+    text-decoration:none;
+    background-image:linear-gradient(var(--rule),var(--rule));
+    background-position:0 100%;
+    background-repeat:no-repeat;
+    background-size:100% 1px;
+  }
+  .hit-title a:hover{ color:var(--link); }
+
+  .hit-block{
+    margin:0 0 10px;
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+  }
+
+  .hit-block-label{
+    flex:0 0 auto;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    letter-spacing:0.04em;
+    color:var(--ink-soft);
+    opacity:0.75;
+    padding-top:2px;
+    white-space:nowrap;
+  }
+
+  .hit-excerpt{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:0.92rem;
+    font-style:italic;
+  }
+
+  .hit-excerpt mark{
+    background:var(--signal-soft);
+    color:var(--ink);
+    padding:0 3px;
+    border-radius:2px;
+    font-style:normal;
+  }
+
+  .hit-summary{
+    margin:0;
+    color:var(--ink);
+    font-size:0.95rem;
+  }
+
+  .hit-link{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.78rem;
+    text-decoration:none;
+  }
+  .hit-link:hover{ text-decoration:underline; }
+
+  /* ---------- empty state ---------- */
+
+  .empty-state{
+    margin-top:56px;
+    padding:32px 20px;
+    text-align:center;
+    color:var(--ink-soft);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    border:1px dashed var(--rule);
+    border-radius:4px;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer{
+    max-width:920px;
+    margin:0 auto;
+    padding:24px clamp(16px,4vw,48px) 48px;
+    border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.74rem;
+    color:var(--ink-soft);
+    line-height:1.7;
+  }
+
+  @media (max-width:520px){
+    .status-line{ white-space:normal; }
+    .wordmark{ font-size:1.3rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-row">
+    <div class="wordmark">TSK China Watch<span class="unit">archive</span></div>
+    <div class="status-line">
+      last scan <span class="n">尚未运行</span> ·
+      <span class="new">0 new</span> today ·
+      <span class="n">0</span> tracked since —
+    </div>
+  </div>
+  <p class="masthead-sub">
+    Every Scholarly Kitchen article whose title or body text names "China" or "Chinese," rescanned daily. Metadata and short context only — read the rest at the source.
+  </p>
+</header>
+
+<main>
+
+  <div class="empty-state">no matches recorded yet — first scan pending</div>
+
+</main>
+
+<footer>
+  Source: The Scholarly Kitchen (scholarlykitchen.sspnet.org). Automated keyword watch, not affiliated with or endorsed by the publisher. Generated 尚未运行.
+</footer>
+
+</body>
+</html>

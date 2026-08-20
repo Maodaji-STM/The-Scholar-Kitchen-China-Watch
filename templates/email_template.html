@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ email_subject }}</title>
+</head>
+<body style="margin:0; padding:0; background-color:#F0F2EA; font-family:Georgia, 'Times New Roman', serif; color:#171F1A;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F0F2EA;">
+<tr>
+<td align="center" style="padding:24px 12px;">
+
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px; width:100%; background-color:#FAFAF4; border:1px solid #CBD1C2; border-radius:4px;">
+
+  <!-- masthead -->
+  <tr>
+    <td style="padding:20px 24px 12px; border-bottom:1px solid #CBD1C2;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="font-family:Georgia, serif; font-weight:bold; font-size:20px; color:#171F1A;">
+            TSK China Watch
+            <span style="font-family:'Courier New', monospace; font-size:11px; font-weight:normal; color:#4B564E; letter-spacing:1px; text-transform:uppercase; padding-left:8px;">daily update</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:12px; color:#4B564E; padding-top:6px;">
+            {{ report_date }} &middot; <span style="color:#C4881F; font-weight:bold;">{{ new_count }} new</span> &middot; {{ total_count }} tracked since {{ since_date }}
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  {% if entries %}
+  <!-- hit cards -->
+  {% for entry in entries %}
+  <tr>
+    <td style="padding:16px 24px; {% if not loop.last %}border-bottom:1px solid #CBD1C2;{% endif %}">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:11px; color:#4B564E; padding-bottom:6px;">
+            №{{ entry.index }} &nbsp;&middot;&nbsp; {{ entry.author }} &nbsp;&middot;&nbsp; match: <span style="background-color:#F1DDAE; padding:0 4px; font-weight:bold; color:#171F1A;">{{ entry.matched_term }}</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:Georgia, serif; font-size:17px; font-weight:bold; line-height:1.4; padding-bottom:8px;">
+            <a href="{{ entry.url }}" style="color:#171F1A; text-decoration:underline;">{{ entry.title }}</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:Georgia, serif; font-size:11px; color:#4B564E; letter-spacing:0.5px; text-transform:uppercase; padding-bottom:2px;">
+            摘录
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:Georgia, serif; font-style:italic; font-size:14px; color:#4B564E; padding-bottom:10px; line-height:1.5;">
+            {{ entry.excerpt_html | safe }}
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:11px; color:#4B564E; letter-spacing:0.5px; text-transform:uppercase; padding-bottom:2px;">
+            摘要
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:Georgia, serif; font-size:14px; color:#171F1A; padding-bottom:10px; line-height:1.5;">
+            {{ entry.summary }}
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:12px;">
+            <a href="{{ entry.url }}" style="color:#2E5E63; text-decoration:none;">read source &rarr;</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  {% endfor %}
+  {% else %}
+  <tr>
+    <td style="padding:32px 24px; text-align:center; font-family:'Courier New', monospace; font-size:13px; color:#4B564E;">
+      今日没有新的中国相关命中文章。
+    </td>
+  </tr>
+  {% endif %}
+
+  <!-- footer -->
+  <tr>
+    <td style="padding:16px 24px 24px; border-top:1px solid #CBD1C2;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:12px; padding-bottom:10px;">
+            <a href="{{ dashboard_url }}" style="color:#2E5E63; text-decoration:none; font-weight:bold;">查看完整累计档案 →</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family:'Courier New', monospace; font-size:11px; color:#4B564E; line-height:1.6;">
+            Source: The Scholarly Kitchen (scholarlykitchen.sspnet.org)。自动化关键词监测，与原网站无关联。<br>
+            生成时间 {{ generated_at }}。
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
