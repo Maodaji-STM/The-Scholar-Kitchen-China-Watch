@@ -1,0 +1,57 @@
+on:
+  schedule:
+    # 北京时间每天 07:00 = UTC 前一天 23:00
+    - cron: "0 23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  models: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scraper, render dashboard, send email
+        id: run_main
+        env:
+          DASHBOARD_URL: ${{ secrets.DASHBOARD_URL }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python main.py
+
+      - name: Commit updated dashboard and state
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/index.html state/state.json
+          git diff --staged --quiet || git commit -m "chore: update China watch dashboard $(date -u +%F)"
+          git push
+
+      - name: Notify failure by email
+        if: failure()
+        env:
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          GMAIL_ADDRESS: ${{ secrets.GMAIL_ADDRESS }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: |
+          python -c "
+          from send_email import send_daily_email
+          send_daily_email(
+              '[TSK China Watch] 今日运行失败',
+              '<p>今天的抓取/渲染任务运行失败，请查看 GitHub Actions 日志排查。'
+              '处理状态未推进，下次运行会自动补跑。</p>'
+          )
+          "
